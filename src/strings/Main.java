@@ -1,7 +1,8 @@
-package com.company;
+package strings;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -34,7 +35,7 @@ public class Main {
         6. Ввести n слов с консоли. Найти слово, состоящее только из цифр. Если
 
         таких слов больше одного, найти второе из них.*/
-        //char ch=' ';
+
         String line;
         ArrayList<String> stringList = new ArrayList<>();
 
@@ -52,9 +53,9 @@ public class Main {
         }
        // System.out.println(MinMax(stringList)); // 1
       //  middleSize(stringList);//2
-        differentSymbols(stringList); //3
+     //   differentSymbols(stringList); //4
+     //   numbers(stringList); //6
     }
-
 
     public static String MinMax(ArrayList<String> stringListMinMax){
         System.out.println("1. stringListMinMax");
@@ -87,25 +88,59 @@ public class Main {
     }
 
     public static void differentSymbols(ArrayList<String> stringDifferent) {
-        int schet = 0;
+        //  int schet;
         int[] diff = new int[stringDifferent.size()];
         for (int i=0; i<stringDifferent.size(); i++) {
-            schet = 0;
-            for (int g=1; g<stringDifferent.get(i).length(); g++) {
-                if (stringDifferent.get(i).charAt(g-1)== stringDifferent.get(i).charAt(g)){
-                    schet+=1;
+            int schet = 1;
+            char[] arrayChar =  stringDifferent.get(i).toCharArray();
+            Arrays.sort(arrayChar);
+            for (int g=1; g<arrayChar.length; g++) {
+                //  char difSym = stringDifferent.get(i).charAt(g);
+                if (arrayChar[g - 1] != arrayChar[g]) {
+                    schet += 1;
                 }
             }
             diff[i] = schet;
         }
-        int max = diff[diff.length-1];
-        int maxI = 0;
-        for (int i = diff.length-2; i >0; i--) {
-            if(max<diff[i])
-                max= diff[i];
-                maxI = i;
-        }
 
-        System.out.println(stringDifferent.get(maxI));
+        int min = -1;
+        int minI = -1;
+        for (int d = 0; d >diff.length; d++) {
+            if(min>diff[d]&&diff[d]!=1)
+                min= diff[d];
+            minI = d;
+        }
+        if (minI>-1)
+            System.out.println(stringDifferent.get(minI));
+        else System.out.println("Goodbay");
+    }
+
+    public static void numbers (ArrayList<String> stringNumbers) {
+        ArrayList<String> numbersList = new ArrayList<>();
+        for (int i=0; i<stringNumbers.size(); i++) {
+            char[] arrayChar =  stringNumbers.get(i).toCharArray();
+            //Arrays.sort(arrayChar);
+            for (int j = 0; j < arrayChar.length; j++) {
+                if (!Character.isDigit(arrayChar[j])){
+                    break;
+                }
+                if (j==(arrayChar.length-1)) {
+                    numbersList.add(stringNumbers.get(i));
+                }
+
+
+            }
+        }
+switch (numbersList.size()) {
+    case 0:
+        System.out.println("Чисел нет"); break;
+    case 1:
+        System.out.println(numbersList.get(0)); break;
+    default:
+        System.out.println(numbersList.get(1)); break;
+}
+
+
+
     }
 }
